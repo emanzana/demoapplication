@@ -2,7 +2,7 @@
     <div>
         <b-button variant="primary" href="projects/new">New</b-button>
         <b-table head-variant hover :items="items" :fields="fields"></b-table>
-        <pre>{{ this.items | json }}</pre>
+        <pre>{{ this.items }}</pre>
     </div>
 </template>
 

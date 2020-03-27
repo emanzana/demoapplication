@@ -1,9 +1,9 @@
 <template>
-  <b-navbar toggleable="lg" type="dark" variant="info">
+  <b-navbar toggleable="lg" type="dark" variant="dark" >
     <b-navbar-brand href="/">Acciona</b-navbar-brand>
-
+ 
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
-
+ 
     <b-collapse id="nav-collapse" is-nav>
       <b-navbar-nav>
         <b-nav-item href="/projects">Projects</b-nav-item>
@@ -13,9 +13,14 @@
     </b-collapse>
   </b-navbar>
 </template>
-
+ 
 <script>
 export default {
     name: 'AppHeader'
 }
 </script>
+<style scoped>
+ .navbar.navbar-dark.bg-dark{
+    background-color: #AABB55!important;
+ }
+</style>
