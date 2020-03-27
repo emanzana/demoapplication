@@ -1,8 +1,8 @@
 <template>
     <div>
         <b-button variant="primary" href="projects/new">New</b-button>
-        <b-table head-variant hover :items="items"></b-table>
-        <pre>{{ this.items }}</pre>
+        <b-table head-variant hover :items="items" :fields="fields"></b-table>
+        <pre>{{ this.items | json }}</pre>
     </div>
 </template>
 
@@ -12,32 +12,19 @@ import service from '@/service';
 export default {
     name: 'ProjectsList',
 
-    projectId: undefined,
-    projectName: undefined,
-    caseStudy: undefined,
-    technology: undefined,
-    capexTypeId: undefined,
-    countryId: undefined,
-    nominalPower: undefined,
-    sentDateç: undefined,
-    userId: undefined,
-    updateDate: undefined,
-    eCaId: undefined,
-
-
     data: () => ({
         fields:
             [
                 { key: 'projectName', sortable: true, label: 'Project Name'},
                 { key: 'caseStudy', sortable: true, label: 'Case Study'},
-                { key: 'tecnology', sortable: true, label: 'Technology'},
-                { key: 'capexTypeId', sortable: true, label: 'CAPEX Type'},
-                { key: 'countryId', sortable: true, label: 'Country'},
-                { key: 'nominalPower', sortable: true, label: 'Nominal Power (MWn)'},
+                { key: 'technology', sortable: true, label: 'Technology'},
+                { key: 'capexType', sortable: true, label: 'CAPEX Type'},
+                { key: 'country', sortable: true, label: 'Country'},
+                { key: 'nominalPowerMWn', sortable: true, label: 'Nominal Power (MWn)'},
                 { key: 'sentDate', sortable: true, label: 'SENT Date'},
                 { key: 'user', sortable: true, label: 'User'},
                 { key: 'updateDate', sortable: true, label: 'Update Date'},
-                { key: 'eCaId', sortable: false, label: 'E&CA ID'}
+                { key: 'e_CA_ID', sortable: false, label: 'E&CA ID'}
             ],
         items: 
             [
