@@ -10,15 +10,7 @@ export default {
     name: 'CapexTypes',
 
     data: () => ({
-        items: [
-            //{ id: 1, name: 'BRONCE' },
-            //{ id: 2, name: 'SILVER' },
-            //{ id: 3, name: 'GOLD' },
-            //{ id: 4, name: 'PLATINUM' },
-            //{ id: 5, name: 'AWARDED' },
-            //{ id: 6, name: 'EXECUTED' },
-            //{ id: 7, name: 'N.A' },
-        ]
+        items: []
     }),
 
     created() {
@@ -32,7 +24,6 @@ export default {
             service.get('https://cors-anywhere.herokuapp.com/https://testacciona.azurewebsites.net/api/CapexTypes'
             ).then(response => {
                 this.items = response.data.capexTypes;
-                console.log(this.items);
             }).catch(() => {
                 console.warn('Error retrieving projects');
             })
