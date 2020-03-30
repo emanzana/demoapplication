@@ -25,20 +25,39 @@
         <b-form-select-option :value="WF">WF</b-form-select-option>
       </b-form-select>
     </b-form-group>
+    <!-- </b-form-group>
 
-    <b-form-group id="capexTypeIdGroup" label="CapexType" label-for="capexTypeId">
-      <b-form-select id="capexTypeId" v-model="project.capexTypeId" :options="Technology" required>
-        <b-form-select-option :value="null" selected>-</b-form-select-option>
-        <b-form-select-option :value="1">BRONCE</b-form-select-option>
-        <b-form-select-option :value="2">SILVER</b-form-select-option>
-        <b-form-select-option :value="3">GOLD</b-form-select-option>
-        <b-form-select-option :value="4">SILVER</b-form-select-option>
-        <b-form-select-option :value="5">AWARDED</b-form-select-option>
-        <b-form-select-option :value="6">EXECUTED</b-form-select-option>
-        <b-form-select-option :value="7">N.A.</b-form-select-option>
+       <b-form-group  id="capexTypeIdGroup" label="CapexType" label-for="capexTypeId">
+        <b-form-select id="capexTypeId" v-model="items" :options="CapexTypes" required>
+        <b-form-select-option :value="null" autofocus="true">-</b-form-select-option>
+        <b-form-select-option v-for="item in items" v-bind:key="item.id" :value="item.id">{{item.capexTypeName}}</b-form-select-option>
+        
+     <b-form-select
+          v-for="item in items"
+          v-bind:key="item.id"
+          :value="item.capexTypeName"
+        >{{item}}</b-form-select>
+        <b-form-select-option :value="item.id">{{item.capexTypeName}}</b-form-select-option >
+
+    </b-form-group>-->
+    <b-form-group id="CapexTyes" label="CapexType" label-for="capexTypeName">
+      <b-form-select
+        id="CapexType"
+        v-model="items"
+        :options="capexTypeName"
+        required
+        v-on:change="cargarCapex()"
+      >
+        <b-form-select-option :value="null" autofocus="true">-</b-form-select-option>
+        <div v-for="item in items" v-bind:key="item.id">
+          <b-form-select-option :value="item.id">{{item.capexTypeName}}</b-form-select-option>
+        </div>
       </b-form-select>
     </b-form-group>
 
+
+    <div v-for="item in items" v-bind:key="item.id">{{item.capexTypeName}}</div>
+    {{this.items}}
     <b-form-group id="countryIdGroup" label="Country" label-for="countryId">
       <b-form-select id="countryId" v-model="project.countryId" :options="Country">
         <b-form-select-option :value="null" selected>-</b-form-select-option>
@@ -89,25 +108,33 @@
 
 <script>
 import axios from "axios";
+import service from "@/service";
 
 export default {
   name: "ProjectsNew",
 
+  created() {
+    this.cargarCapex();
+  },
+
   data: () => ({
+    items: [],
+
     project: {
       projectName: "",
-      caseStudy: "2",
+      caseStudy: "0",
       technology: "PV",
       capexTypeId: 1,
       countryId: 1,
       nominalPowerMWn: 0,
-      sentDate: "2020-03-27T09:43:13.176Z",
-      user: "pepe",
-      updateDate: "2020-03-27T09:43:13.176Z",
-      e_CA_ID: "pdfe"
+      sentDate: "",
+      user: "",
+      updateDate: "",
+      e_CA_ID: "PDTE"
     },
 
-    urlCreate:"https://cors-anywhere.herokuapp.com/https://testacciona.azurewebsites.net/api/Projects"
+    urlCreate:
+      "https://cors-anywhere.herokuapp.com/https://testacciona.azurewebsites.net/api/Projects"
   }),
 
   // Utilizaremos un objeto de tipo 'promise'
@@ -116,6 +143,20 @@ export default {
   // Una promesa puede estar en uno de los 3 estados posibles: cumplida, rechazada o pendiente.
   // Para usar una promise necesitas poner .then y .catch (Como TRY and CATCH)
   methods: {
+    cargarCapex() {
+      service
+        .get(
+          "https://cors-anywhere.herokuapp.com/https://testacciona.azurewebsites.net/api/CapexTypes"
+        )
+        .then(response => {
+          this.items = response.data.capexTypes;
+          console.log(this.items);
+          return this.items;
+        })
+        .catch(() => {
+          console.warn("Error retrieving projects");
+        });
+    },
     // Guarda un proyecto
 
     sendData() {
