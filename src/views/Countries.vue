@@ -31,7 +31,7 @@ export default {
             loadCountries() {
             service.get('https://cors-anywhere.herokuapp.com/https://testacciona.azurewebsites.net/api/Countries'
             ).then(response => {
-                this.items = response.data.projects;
+                this.items = response.data.countries;
                 console.log(this.items);
             }).catch(() => {
                 console.warn('Error retrieving projects');

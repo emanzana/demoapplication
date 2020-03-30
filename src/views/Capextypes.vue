@@ -7,7 +7,7 @@
 import service from '@/service';
 
 export default {
-    name: 'Capextypes',
+    name: 'CapexTypes',
 
     data: () => ({
         items: [
@@ -31,7 +31,7 @@ export default {
             loadCapexTypes() {
             service.get('https://cors-anywhere.herokuapp.com/https://testacciona.azurewebsites.net/api/CapexTypes'
             ).then(response => {
-                this.items = response.data.projects;
+                this.items = response.data.capexTypes;
                 console.log(this.items);
             }).catch(() => {
                 console.warn('Error retrieving projects');
