@@ -1,4 +1,5 @@
 <template>
+<div class="active px-2">
   <form @submit="sendData">
     <b-form-group id="projectNameGroup" label="Project Name:" label-for="projectName">
       <b-form-input
@@ -25,6 +26,7 @@
         <b-form-select-option :value="WF">WF</b-form-select-option>
       </b-form-select>
     </b-form-group>
+
     <!-- </b-form-group>
 
        <b-form-group  id="capexTypeIdGroup" label="CapexType" label-for="capexTypeId">
@@ -41,34 +43,28 @@
 
     </b-form-group>-->
     <b-form-group id="CapexTyes" label="CapexType" label-for="capexTypeName">
-      <b-form-select
-        id="CapexType"
-        v-model="items"
-        :options="capexTypeName"
-        required
-        v-on:change="cargarCapex()"
-      >
-        <b-form-select-option :value="null" autofocus="true">-</b-form-select-option>
-        <div v-for="item in items" v-bind:key="item.id">
-          <b-form-select-option :value="item.id">{{item.capexTypeName}}</b-form-select-option>
-        </div>
-      </b-form-select>
+      <select v-model="capexType" class="form-control">
+        <option disabled value selected="selected">Please select one</option>
+        <option
+          v-for="capexType in capexTypes"
+          :key="capexType.id"
+          v-bind:value="capexType.id"
+        >{{capexType.capexTypeName}}</option>
+      </select>
     </b-form-group>
 
-
-    <div v-for="item in items" v-bind:key="item.id">{{item.capexTypeName}}</div>
-    {{this.items}}
-    <b-form-group id="countryIdGroup" label="Country" label-for="countryId">
-      <b-form-select id="countryId" v-model="project.countryId" :options="Country">
-        <b-form-select-option :value="null" selected>-</b-form-select-option>
-        <b-form-select-option :value="1">SPAIN</b-form-select-option>
-        <b-form-select-option :value="2">AUSTRIA</b-form-select-option>
-        <b-form-select-option :value="3">BAHAMAS</b-form-select-option>
-        <b-form-select-option :value="4">CAVO VERDE</b-form-select-option>
-        <b-form-select-option :value="5">CHINA</b-form-select-option>
-        <b-form-select-option :value="6">FRANCE</b-form-select-option>
-        <b-form-select-option :value="7">GERMANY</b-form-select-option>
-      </b-form-select>
+    <!-- <div v-for="item in capexTypes" v-bind:key="item.id">{{item.capexTypeName}}</div>
+    {{this.capexTypes}}-->
+    
+   <b-form-group id="Countries" label="Countries" label-for="countryName">
+      <select v-model="items" class="form-control">
+        <option disabled value selected="selected">Please select one</option>
+        <option
+          v-for="country in countries"
+          :key="country.id"
+          v-bind:value="country.id"
+        >{{country.countryName}}</option>
+      </select>
     </b-form-group>
 
     <b-form-group
@@ -104,6 +100,7 @@
     <b-button type="button" variant="light" href="/projects">Cancel</b-button>
     <b-button type="button" v-on:click="sendData()" variant="primary">Save</b-button>
   </form>
+  </div>
 </template>
 
 <script>
@@ -115,10 +112,26 @@ export default {
 
   created() {
     this.cargarCapex();
+    this.cargarCountries();
   },
 
   data: () => ({
-    items: [],
+    capexTypes: [
+      {
+        capexTypes: {
+          capexTypeName: ""
+        }
+      }
+    ],
+    countries: [
+      {
+        countries: {
+          countryName: "",
+          countryCode: ""
+        }
+      }
+    ],
+    Technology: {},
 
     project: {
       projectName: "",
@@ -149,9 +162,21 @@ export default {
           "https://cors-anywhere.herokuapp.com/https://testacciona.azurewebsites.net/api/CapexTypes"
         )
         .then(response => {
-          this.items = response.data.capexTypes;
-          console.log(this.items);
-          return this.items;
+          this.capexTypes = response.data.capexTypes;
+          console.log(this.capexTypes);
+        })
+        .catch(() => {
+          console.warn("Error retrieving projects");
+        });
+    },
+    cargarCountries() {
+      service
+        .get(
+          "https://cors-anywhere.herokuapp.com/https://testacciona.azurewebsites.net/api/Countries"
+        )
+        .then(response => {
+          this.countries = response.data.countries;
+          console.log(this.countries);
         })
         .catch(() => {
           console.warn("Error retrieving projects");
