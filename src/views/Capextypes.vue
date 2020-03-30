@@ -29,7 +29,7 @@ export default {
     methods: {
         // Cargar capextypes
             loadCapexTypes() {
-            service.get('https://cors-anywhere.herokuapp.com/https://testacciona.azurewebsites.net/api/Countries'
+            service.get('https://cors-anywhere.herokuapp.com/https://testacciona.azurewebsites.net/api/CapexTypes'
             ).then(response => {
                 this.items = response.data.projects;
                 console.log(this.items);
